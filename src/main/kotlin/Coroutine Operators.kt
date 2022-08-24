@@ -1,8 +1,6 @@
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.asFlow
-import kotlinx.coroutines.flow.filter
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.transform
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.runBlocking
 
 fun main() {
@@ -15,6 +13,12 @@ fun main() {
         filterOperator()
 
         transformOperator()
+
+        takeOperator()
+
+        reduceOperator()
+
+        flowOnOperator()
 
     }
 }
@@ -49,4 +53,32 @@ private suspend fun mapOperator() {
     }.collect {
         println(it)
     }
+}
+
+private suspend fun takeOperator() {
+    //takes only the specified number and disregards the rest
+    (1..10).asFlow()
+        .take(3)
+        .collect {
+            println(it)
+        }
+}
+
+private suspend fun reduceOperator() {
+    val size = 10
+    val factorial = (1..10).asFlow()
+        .reduce { accumulator, value ->
+            accumulator * value
+        }
+
+    println("Factorial of $size is $factorial")
+}
+
+private suspend fun flowOnOperator() {
+    //specifies the thread to execute the flow on
+    (1..10).asFlow()
+        .flowOn(Dispatchers.IO)
+        .collect {
+            println(it)
+        }
 }
