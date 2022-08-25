@@ -21,7 +21,7 @@ fun main() {
 
 fun CoroutineScope.produceNumbers() = produce {
     var x = 1
-    while (true)
+    while (x < 10)
         send(x++)
 }
 
