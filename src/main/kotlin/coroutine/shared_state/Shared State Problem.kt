@@ -1,4 +1,4 @@
-package coroutine
+package coroutine.shared_state
 
 import kotlinx.coroutines.*
 import kotlin.system.measureTimeMillis
@@ -8,6 +8,10 @@ import kotlin.system.measureTimeMillis
  * However, some updates may be lost
  * */
 fun main() {
+    //This shows the shared state problem
+    //expected counter result is 100,000
+    //actual result was 59100 in my case
+
     runBlocking {
         var counter = 0
         withContext(Dispatchers.Default) {
@@ -19,9 +23,7 @@ fun main() {
     }
 }
 
-//This shows the shared state problem
-//expected counter result is 100,000
-//actual result was 59100 in my case
+
 suspend fun massiveRun(action: suspend () -> Unit) {
     val n = 100
     val k = 1000
