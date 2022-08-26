@@ -5,6 +5,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 
+/**
+ * If multiple coroutines receive from the same channel,
+ * values(work) are distributed among them
+ * **/
 fun main() {
     runBlocking {
         val producer = produceNewNumbers()
